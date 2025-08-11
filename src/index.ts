@@ -20,7 +20,8 @@ app.get("/", (c) => {
     - POST post > define a new post
     - GET post > get a json preview of the defined post
     - GET post/html > get a rough html preview of the defined post
-    - POST send > send the defined post
+    - POST all/test > test all the channels
+    - POST all/send > send the defined post to all the channels
   `);
 });
 
@@ -87,7 +88,7 @@ app.get("/all/test", (c) => {
   return c.json(result);
 });
 
-app.get("/all/send", (c) => {
+app.post("/all/send", (c) => {
   const channels = c.get("channels");
   const result = {} as Record<string, object>;
 
