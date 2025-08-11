@@ -89,12 +89,31 @@ app.get("/all/test", (c) => {
 
 app.get("/all/send", (c) => {
   const channels = c.get("channels");
-
   const result = {} as Record<string, object>;
+
+  if (!post.title || !post.imageUrl) {
+    return c.json({
+      err: "post send all cancelled: missing data",
+    });
+  }
+
   for (let channel of channels) {
-    if (channel.ready) {
-      result[channel.name] = channel.send(env(c), post);
+    if (!channel.ready) {
+      result[channel.name] = {
+        err: "channel skipped: marked as not ready",
+      };
+      continue;
     }
+    // fugly but ok
+    const postMd5 = post.title + post.imageUrl;
+    if (!(channel.history ?? []).includes(postMd5)) {
+      result[channel.name] = {
+        err: "channel skipped: already sent this post",
+      };
+      continue;
+    }
+    result[channel.name] = channel.send(env(c), post);
+    channel.history.push(postMd5);
   }
 
   return c.json(result);
