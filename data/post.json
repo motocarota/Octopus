@@ -1,0 +1,6 @@
+{
+  "title": "some title",
+  "desc": "caption for the image, in case there is some explanation needed",
+  "tags": "tag1 tag2 tag3",
+  "imageUrl": "./image1.webp"
+}
