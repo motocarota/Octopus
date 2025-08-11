@@ -43,15 +43,23 @@ app.get('/channel/send/:id', c => {
   return c.json({ result })
 })
 
-app.get('/post/new', c => {
-  // TODO return currently set title, desc, tags and imageUrl
-  return c.text("NYI!")
+app.get('/post', c => {
+  return c.json({ post })
 })
 
-app.post('/post/new', c => {
-  // TODO check if title, desc, tags and imageUrl are set
-  // TODO pass title, desc, tags and imageUrl
-  return c.text("NYI!")
+app.post('/post', c => {
+  const { title, imageUrl, desc, tags } = c.req.param() as Post;
+  if (!title || !imageUrl) {
+    return c.json({
+      err: 'missing required fields'
+    })
+  }
+  post.title = title;
+  post.imageUrl = imageUrl;
+  post.desc = desc;
+  post.tags = tags;
+
+  return c.json({ post })
 })
 
 app.post('/post/send', c => {
