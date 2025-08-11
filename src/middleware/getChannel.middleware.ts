@@ -1,9 +1,9 @@
 import { createMiddleware } from 'hono/factory'
-import accounts from '../accounts';
+import channels from '../channels';
 
 const getChannel = createMiddleware(async (c, next) => {
   const id = c.req.param('id') ?? ""
-  const channel = accounts[id];
+  const channel = channels[id];
   if (!channel) {
     return c.json({ err: `no account found for ${id}` })
   }

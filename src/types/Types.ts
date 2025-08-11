@@ -1,5 +1,6 @@
 declare module 'hono' {
   interface ContextVariableMap {
+    channels: Channel[],
     channel: Channel
   }
 }
@@ -14,6 +15,8 @@ export type Post = {
 }
 
 export type Channel = {
+  name: string,
+  ready?: boolean,
   test: (e: Env) => boolean;
   send: (e: Env, post: Post) => Promise<any>;
 }
