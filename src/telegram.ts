@@ -13,7 +13,7 @@ function test(env: Env) {
 async function send(env: Env, post: Post) {
   const { TELEGRAM_KEY, TELEGRAM_SECRET, TELEGRAM_CHAT_ID } = env;
   const { title, desc, imageUrl } = post;
-  const apiUrl = `https://apia.telegram.org/bot${TELEGRAM_KEY}:${TELEGRAM_SECRET}/sendPhoto`;
+  const apiUrl = `https://api.telegram.org/bot${TELEGRAM_KEY}/sendPhoto?chat_id=${TELEGRAM_CHAT_ID}&photo=${imageUrl}&caption=${title}`;
 
   try {
     const response = await fetch(apiUrl, {
